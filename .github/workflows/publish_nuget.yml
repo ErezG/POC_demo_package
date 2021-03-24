@@ -30,6 +30,10 @@ jobs:
       working-directory: ./DemoMomo/DemoMomo
       run: dotnet pack --no-build --configuration Release -o ../../Nugets
       
+    - name: Debug
+      working-directory: ./Nugets
+      run: echo dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/index.json
+      
     - name: Push package
       working-directory: ./Nugets
       run: dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/index.json
