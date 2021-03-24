@@ -35,12 +35,12 @@ jobs:
       
     - name: Debug
       working-directory: ./Nugets
-      run: echo dotnet nuget push "*.nupkg" -k $repo-token -s https://nuget.pkg.github.com/ErezG/index.json
+      run: echo dotnet nuget push "*.nupkg" -k $REPO-TOKEN -s https://nuget.pkg.github.com/ErezG/index.json
       env:
         REPO-TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Push package
       working-directory: ./Nugets
-      run: dotnet nuget push "*.nupkg" -k $repo-token -s https://nuget.pkg.github.com/ErezG/index.json
+      run: dotnet nuget push "*.nupkg" -k $REPO-TOKEN -s https://nuget.pkg.github.com/ErezG/index.json
       env:
         REPO-TOKEN: ${{ secrets.GITHUB_TOKEN }}
