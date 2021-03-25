@@ -9,6 +9,7 @@
   <PropertyGroup>
     <PackageId>DemoMomo</PackageId>
     <Version>0.1.0</Version>
+    <RepositoryUrl>https://github.com/ErezG/POC_demo_package</RepositoryUrl>
     <Authors>Erez Givon</Authors>
     <Company>365Scores</Company>
     <PackageTags>POC;Demo</PackageTags>
