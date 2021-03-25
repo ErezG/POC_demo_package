@@ -20,6 +20,7 @@ jobs:
       working-directory: ./DemoMomo/DemoMomo
       run: |
         current_version=$(sed -e 's/[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/' DemoMomo.csproj)
+        current_version=1.2.3
         echo "current_version=$current_version" >> $GITHUB_ENV
         echo current_version: $current_version
         #echo env.current_version: ${{ env.current_version }}
