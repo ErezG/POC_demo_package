@@ -19,11 +19,9 @@ jobs:
     - name: Get existing version
       working-directory: ./DemoMomo/DemoMomo
       run: |
-        current_version=$(sed -e 's/[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/' DemoMomo.csproj)
-        current_version=1.2.3
+        current_version=$(sed -n -e 's/[ ]*[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/p' DemoMomo.csproj)
         echo "current_version=$current_version" >> $GITHUB_ENV
         echo current_version: $current_version
-        echo env.current_version: ${{ env.current_version }}
       
     - name: Choose version bump
       run: echo "bump_type=MINOR" >> $GITHUB_ENV
