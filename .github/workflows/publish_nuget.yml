@@ -62,7 +62,7 @@ jobs:
         git status
         git_message=(v${{ env.current_version }}' => 'v${{ env.new_version }})
         echo $git_message
-        git commit -m "`$git_message`"
+        git commit -m "$git_message"
         git push
       
   #Pack_and_Push:
