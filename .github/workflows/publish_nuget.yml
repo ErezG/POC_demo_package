@@ -24,7 +24,7 @@ jobs:
         echo current_version: $current_version
       
     - name: Choose version bump
-      run: echo "bump_type=MINOR" >> $GITHUB_ENV
+      run: echo "bump_type=PATCH" >> $GITHUB_ENV
       
     - name: Create new version
       run: |
@@ -33,9 +33,12 @@ jobs:
         case ${{ env.bump_type }} in
           MAJOR)
             major=$(($major + 1))
+            minor=0
+            patch=0
         	;;
           MINOR)
             minor=$(($minor + 1))
+            patch=0
         	;;
           *)
             patch=$(($patch + 1))
@@ -47,7 +50,10 @@ jobs:
       
     - name: Update version
       working-directory: ./DemoMomo/DemoMomo
-      run: sed -i -r s#\<AssemblyVersion\>[0-9.]+\<\/AssemblyVersion\>#\<AssemblyVersion\>$new_version\<\/AssemblyVersion\>#g DemoMomo.csproj
+      run: |
+        sed -i -r s#\<AssemblyVersion\>[0-9.]+\<\/AssemblyVersion\>#\<AssemblyVersion\>$new_version\<\/AssemblyVersion\>#g DemoMomo.csproj
+        sed -i -r s#\<FileVersion\>[0-9.]+\<\/FileVersion\>#\<FileVersion\>$new_version\<\/FileVersion\>#g DemoMomo.csproj
+        sed -i -r s#\<Version\>[0-9.]+\<\/Version\>#\<Version\>$new_version\<\/Version\>#g DemoMomo.csproj
       
     - name: Commit new version
       run: |
