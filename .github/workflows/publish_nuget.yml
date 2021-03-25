@@ -18,10 +18,10 @@ jobs:
         
     - name: Get existing version
       working-directory: ./DemoMomo/DemoMomo
-      run: $current_version=$(sed -e 's/[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/' DemoMomo.csproj)
+      run: current_version=$(sed -e 's/[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/' DemoMomo.csproj)
       
     - name: Choose version bump
-      run: $bump_type='MINOR'
+      run: bump_type='MINOR'
       
     - name: Create new version
       run: |
