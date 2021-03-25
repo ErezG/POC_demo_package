@@ -22,6 +22,7 @@ jobs:
       working-directory: ./DemoMomo/DemoMomo
       run: |
         CURRENT_VERSION=$(sed -e 's/[<]AssemblyVersion[>]\([0-9.]\+\)[<][/]AssemblyVersion[>]/\1/' DemoMomo.csproj)
+        echo "::set-env name=CURRENT_VERSION::$CURRENT_VERSION"
         echo CURRENT_VERSION: $CURRENT_VERSION
       
     - name: Choose version bump
@@ -47,7 +48,7 @@ jobs:
       
     - name: Update version
       working-directory: ./DemoMomo/DemoMomo
-      run: sed -r s#\<AssemblyVersion\>[0-9.]+\<\/AssemblyVersion\>#\<AssemblyVersion\>$new_version\<\/AssemblyVersion\>#g DemoMomo.csproj
+      run: sed -i -r s#\<AssemblyVersion\>[0-9.]+\<\/AssemblyVersion\>#\<AssemblyVersion\>$new_version\<\/AssemblyVersion\>#g DemoMomo.csproj
       
     - name: Commit new version
       run: |
