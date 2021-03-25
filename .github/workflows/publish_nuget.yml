@@ -26,18 +26,18 @@ jobs:
     - name: Create new version
       run: |
         [[ "$current_version" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && major="${BASH_REMATCH[1]}" && minor="${BASH_REMATCH[2]}" && patch="${BASH_REMATCH[3]}";
-	    case $bump_type in
-	      MAJOR)
-	        major=$(($major + 1))
-	    	;;
-	      MINOR)
-	        minor=$(($minor + 1))
-	    	;;
-	      *)
-	        patch=$(($patch + 1))
-	    	;;
-	    esac
-	    new_version=$major.$minor.$patch
+        case $bump_type in
+          MAJOR)
+            major=$(($major + 1))
+        	;;
+          MINOR)
+            minor=$(($minor + 1))
+        	;;
+          *)
+            patch=$(($patch + 1))
+        	;;
+        esac
+        new_version=$major.$minor.$patch
         echo new_version: $new_version
       
     - name: Update version
