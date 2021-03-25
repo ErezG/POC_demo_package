@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  Bump Version:
+  Bump_Version:
 
     runs-on: ubuntu-latest
 
@@ -51,7 +51,7 @@ jobs:
         git commit -m $git_message
         git push
       
-  #Pack & Push:
+  #Pack_and_Push:
   #
   #  runs-on: ubuntu-latest
   #
