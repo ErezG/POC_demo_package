@@ -23,16 +23,16 @@ jobs:
         current_version=1.2.3
         echo "current_version=$current_version" >> $GITHUB_ENV
         echo current_version: $current_version
-        #echo env.current_version: ${{ env.current_version }}
+        echo env.current_version: ${{ env.current_version }}
       
     - name: Choose version bump
-      run: bump_type='MINOR'
+      run: echo "bump_type=MINOR" >> $GITHUB_ENV
       
     - name: Create new version
       run: |
         echo current_version: ${{ env.current_version }}
         [[ "${{ env.current_version }}" =~ ([0-9]+).([0-9]+).([0-9]+)$ ]] && major="${BASH_REMATCH[1]}" && minor="${BASH_REMATCH[2]}" && patch="${BASH_REMATCH[3]}";
-        case $bump_type in
+        case ${{ env.bump_type }} in
           MAJOR)
             major=$(($major + 1))
         	;;
@@ -44,6 +44,7 @@ jobs:
         	;;
         esac
         new_version=$major.$minor.$patch
+        echo "new_version=$new_version" >> $GITHUB_ENV
         echo new_version: $new_version
       
     - name: Update version
@@ -54,7 +55,7 @@ jobs:
       run: |
         git stage */DemoMomo.csproj
         git status
-        #git_message=(v${{ env.current_version }}' => 'v$new_version)
+        #git_message=(v${{ env.current_version }}' => 'v${{ env.new_version }})
         #git commit -m $git_message
         #git push
       
