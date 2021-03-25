@@ -24,7 +24,7 @@ jobs:
         echo current_version: $current_version
       
     - name: Choose version bump
-      run: echo "bump_type=PATCH" >> $GITHUB_ENV
+      run: echo "bump_type=MINOR" >> $GITHUB_ENV
       
     - name: Create new version
       run: |
@@ -62,7 +62,7 @@ jobs:
         git status
         git_message=(v${{ env.current_version }}' => 'v${{ env.new_version }})
         echo $git_message
-        git commit -m '$git_message'
+        git commit -m $git_message
         git push
       
   #Pack_and_Push:
