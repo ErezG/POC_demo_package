@@ -56,8 +56,6 @@ jobs:
         git_message=(v${{ env.current_version }}' => 'v${{ env.new_version }})
         echo $git_message
         git commit -m '$git_message'
-        git config user.name "Bump Version (GitHub Action)"
-        git push
       
   #Pack_and_Push:
   #
