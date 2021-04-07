@@ -2,9 +2,14 @@ name: Build & Publish Nuget
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      bump_type:
+        description: 'Version bump type ( MAJOR / MINOR / PATCH )'
+        required: false
+        default: 'PATCH'
+  #push:
+  #  branches:
+  #    - main
 
 jobs:
   Bump_Version:
@@ -24,7 +29,10 @@ jobs:
         echo current_version: $current_version
       
     - name: Choose version bump
-      run: echo "bump_type=MAJOR" >> $GITHUB_ENV
+      run: |
+        echo "bump_type=MAJOR" >> $GITHUB_ENV
+        inputs_bump_type=${{ github.event.inputs.bump_type }}
+        if [ ! -z $inputs_bump_type ]; then echo "bump_type=inputs_bump_type" >> $GITHUB_ENV; fi
       
     - name: Create new version
       run: |
@@ -65,32 +73,34 @@ jobs:
         git commit -m "$git_message"
         git push
       
-  #Pack_and_Push:
-  #
-  #  runs-on: ubuntu-latest
-  #
-  #  steps:
-  #  
-  #  - name: Checkout
-  #    uses: actions/checkout@v2
-  #  
-  #  - name: Setup .NET
-  #    uses: actions/setup-dotnet@v1
-  #    with:
-  #      dotnet-version: 3.1.x
-  #      
-  #  - name: Restore dependencies
-  #    working-directory: ./DemoMomo/DemoMomo
-  #    run: dotnet restore
-  #    
-  #  - name: Build
-  #    working-directory: ./DemoMomo/DemoMomo
-  #    run: dotnet build --no-restore --configuration Release
-  #    
-  #  - name: Pack
-  #    working-directory: ./DemoMomo/DemoMomo
-  #    run: dotnet pack --no-build --configuration Release -o ../../Nugets
-  #    
-  #  - name: Push package
-  #    working-directory: ./Nugets
-  #    run: dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/index.json
+  Pack_and_Push:
+    
+    needs: Bump_Version
+  
+    runs-on: ubuntu-latest
+  
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+        
+    - name: Restore dependencies
+      working-directory: ./DemoMomo/DemoMomo
+      run: dotnet restore
+      
+    - name: Build
+      working-directory: ./DemoMomo/DemoMomo
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Pack
+      working-directory: ./DemoMomo/DemoMomo
+      run: dotnet pack --no-build --configuration Release -o ../../../Nugets
+      
+    - name: Push package
+      working-directory: ../Nugets
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/POC_demo_package/index.json
