@@ -103,4 +103,4 @@ jobs:
       
     - name: Push package
       working-directory: ../Nugets
-      run: dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/POC_demo_package/index.json
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/ErezG/index.json
